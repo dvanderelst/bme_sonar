@@ -13,6 +13,7 @@ from MaxbotixBME import BMEclient
 from ReadSettings import SettingsReader
 
 Settings = SettingsReader()
+Settings.print_settings()
 
 pyqtgraph.setConfigOption('background', 'w')
 pyqtgraph.setConfigOption('foreground', 'k')
@@ -80,8 +81,12 @@ class Application(bme_sonar_gui.Ui_MainWindow):
 
     def handle_measure_button(self):
         measurement_name = self.MeasurementName.text()
-        self.client.connect()
-        self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration)
+        if not Settings.dummy_data:
+            self.client.connect()
+            self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration)
+        else:
+            self.data = numpy.random.random(100) * 3000 + Settings.baseline
+
         self.data = self.data - Settings.baseline
         self.plot_data(self.data, measurement_name)
         self.data_saved = False

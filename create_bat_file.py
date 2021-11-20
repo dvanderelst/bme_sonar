@@ -17,8 +17,10 @@ def make_bat(python_script, bat_name=None):
 
     # Get current anaconda environment
     parts = executable.split(os.sep)
-    index = parts.index('envs')
-    environment = parts[index + 1]
+    environment = None
+    if 'envs' in parts:
+        index = parts.index('envs')
+        environment = parts[index + 1]
 
     print('> Executable:', anaconda)
     print('> Anaconda:', anaconda)
@@ -28,7 +30,7 @@ def make_bat(python_script, bat_name=None):
     script = script.replace('*', os.sep)
     
     line1 = 'call ' + anaconda + script + ' ' + anaconda 
-    line2 = 'call activate ' + environment
+    line2 = 'call activate ' + str(environment)
     line3 = 'call python ' + python_script
     
     name = python_script.replace('.py', '')
@@ -39,7 +41,7 @@ def make_bat(python_script, bat_name=None):
     
     f = open(name, 'w')
     f.write(line1 + '\n')
-    f.write(line2 + '\n')
+    if environment is not None: f.write(line2 + '\n')
     f.write(line3 + '\n')
     f.close()
     
