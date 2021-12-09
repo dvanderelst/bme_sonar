@@ -73,6 +73,7 @@ class Application(bme_sonar_gui.Ui_MainWindow):
         self.graphWidget.addLegend()
         if legend_name == '': legend_name = str(self.line_index)
         self.graphWidget.plot(distance, data, pen=pyqtgraph.mkPen(current_color, width=2), name=legend_name)
+        self.graphWidget.setLimits(xMin=0, xMax=2000, yMin=0, yMax=5000)
 
 
     def set_status(self, text):
@@ -82,9 +83,12 @@ class Application(bme_sonar_gui.Ui_MainWindow):
     def handle_measure_button(self):
         measurement_name = self.MeasurementName.text()
         if not Settings.dummy_data:
+            print('Performing measurement...')
             self.client.connect()
             self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration)
+
         else:
+            print('Generating dummy data ...')
             self.data = numpy.random.random(100) * 3000 + Settings.baseline
 
         self.data = self.data - Settings.baseline

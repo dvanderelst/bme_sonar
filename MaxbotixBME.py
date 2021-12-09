@@ -28,13 +28,25 @@ class BMEclient:
 
     def get_data(self, rate, duration):
         if verbose: print('Start get_data...')
-        command = str(rate) + ',' + str(duration) + Settings.break_char
+        command = str(rate) + ',' + str(100) + Settings.break_char
         if verbose: print('Command:', command)
         data = self.send_command(command)
         data = re.findall(r'[0-9]+', data)
         data = [int(i) for i in data]
         data = numpy.array(data)
+
+        signal_samples = int((duration * Settings.rate) / 1000)
+
+        signal_threshold = Settings.signal_threshold
+        found = numpy.where(data > signal_threshold)[0]
+
+        if len(found) > 0:
+            start_index = numpy.min(found[0])
+            end_index = start_index + signal_samples
+            data = data[start_index:end_index]
+
         if verbose: print('Data:', data)
+        if verbose: print(start_index,end_index, signal_samples)
         return data
 
     def send_command(self, command, expect_answer=True):

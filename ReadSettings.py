@@ -25,6 +25,7 @@ class SettingsReader:
         self.duration = int(self.config['DEFAULT']['duration'])
         
         self.baseline = int(self.config['DEFAULT']['baseline'])
+        self.signal_threshold = int(self.config['DEFAULT']['signal_threshold'])
         
         self.break_char = self.config['DEFAULT']['break_char']
 
@@ -38,6 +39,7 @@ class SettingsReader:
         print('rate', self.rate)
         print('duration', self.duration)
         print('baseline', self.baseline)
+        print('signal_threshold', self.signal_threshold)
         print('break_char', self.break_char)
 
 
