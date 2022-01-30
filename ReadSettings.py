@@ -29,6 +29,8 @@ class SettingsReader:
         
         self.break_char = self.config['DEFAULT']['break_char']
 
+        self.raw_data = bool(self.config['DEFAULT']['raw_data'])
+
     def print_settings(self):
         print('SETTINGS')
         print('dummy_data', self.dummy_data)
@@ -41,6 +43,7 @@ class SettingsReader:
         print('baseline', self.baseline)
         print('signal_threshold', self.signal_threshold)
         print('break_char', self.break_char)
+        print('raw_data', self.raw_data)
 
 
         

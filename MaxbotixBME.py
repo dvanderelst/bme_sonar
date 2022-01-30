@@ -26,7 +26,7 @@ class BMEclient:
     def disconnect(self):
         self.sock.close()
 
-    def get_data(self, rate, duration):
+    def get_data(self, rate, duration, raw=False):
         if verbose: print('Start get_data...')
         command = str(rate) + ',' + str(100) + Settings.break_char
         if verbose: print('Command:', command)
@@ -34,6 +34,10 @@ class BMEclient:
         data = re.findall(r'[0-9]+', data)
         data = [int(i) for i in data]
         data = numpy.array(data)
+
+        if raw:
+            if verbose: print('Data:', data)
+            return data
 
         signal_samples = int((duration * Settings.rate) / 1000)
 

@@ -85,13 +85,13 @@ class Application(bme_sonar_gui.Ui_MainWindow):
         if not Settings.dummy_data:
             print('Performing measurement...')
             self.client.connect()
-            self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration)
+            self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration, raw=Settings.raw_data)
 
         else:
             print('Generating dummy data ...')
             self.data = numpy.random.random(100) * 3000 + Settings.baseline
 
-        self.data = self.data - Settings.baseline
+        if not Settings.raw_data: self.data = self.data - Settings.baseline
         self.plot_data(self.data, measurement_name)
         self.data_saved = False
         self.set_status('Measurement %s Completed' % measurement_name)
