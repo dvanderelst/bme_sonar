@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import time
 from os import path
 
 import natsort
@@ -35,7 +36,9 @@ class Application(bme_sonar_gui.Ui_MainWindow):
         self.MainWindow = QtWidgets.QMainWindow()
         self.setupUi(self.MainWindow)
         self.MainWindow.show()
-        
+
+
+        self.ready = True
         self.data = None
         self.data_saved = False
         self.client = BMEclient()
@@ -81,11 +84,18 @@ class Application(bme_sonar_gui.Ui_MainWindow):
         self.statusbar.showMessage(text)
 
     def handle_measure_button(self):
+        if not self.ready: return
+        self.ready = False
         measurement_name = self.MeasurementName.text()
         if not Settings.dummy_data:
+            self.set_status('Performing measurement...')
             print('Performing measurement...')
             self.client.connect()
+            self.set_status('Connected...')
+            print('Connected...')
             self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration, raw=Settings.raw_data)
+            self.set_status('Data received...')
+            print('Data received...')
 
         else:
             print('Generating dummy data ...')
@@ -94,6 +104,10 @@ class Application(bme_sonar_gui.Ui_MainWindow):
         if not Settings.raw_data: self.data = self.data - Settings.baseline
         self.plot_data(self.data, measurement_name)
         self.data_saved = False
+
+        time.sleep(0.5)
+        self.ready = True
+
         self.set_status('Measurement %s Completed' % measurement_name)
 
     def handle_delete_data_button(self):

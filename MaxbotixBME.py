@@ -58,6 +58,7 @@ class BMEclient:
         self.sock.send(command.encode())
         data = ''
         if not expect_answer: return data
+        print('waiting for data...')
         while 1:
             packet = self.sock.recv(1024)
             packet = packet.decode()
