@@ -29,21 +29,25 @@ class SettingsReader:
         
         self.break_char = self.config['DEFAULT']['break_char']
 
-        self.raw_data = bool(self.config['DEFAULT']['raw_data'])
+        self.raw_data = self.config['DEFAULT']['raw_data']
+        if self.raw_data == 'True':
+            self.raw_data = True
+        else:
+            self.raw_data = False
 
     def print_settings(self):
         print('SETTINGS')
-        print('dummy_data', self.dummy_data)
-        print('colors', self.colors)
-        print('buffer_dir', self.buffer_dir)
-        print('ip', self.ip)
-        print('port', self.port)
-        print('rate', self.rate)
-        print('duration', self.duration)
-        print('baseline', self.baseline)
-        print('signal_threshold', self.signal_threshold)
-        print('break_char', self.break_char)
-        print('raw_data', self.raw_data)
+        print('dummy_data', self.dummy_data, type(self.dummy_data))
+        print('colors', self.colors, type(self.colors))
+        print('buffer_dir', self.buffer_dir, type(self.buffer_dir))
+        print('ip', self.ip, type(self.ip))
+        print('port', self.port, type(self.port))
+        print('rate', self.rate, type(self.rate))
+        print('duration', self.duration, type(self.duration))
+        print('baseline', self.baseline, type(self.baseline))
+        print('signal_threshold', self.signal_threshold, type(self.signal_threshold))
+        print('break_char', self.break_char, type(self.break_char))
+        print('raw_data', self.raw_data, type(self.raw_data))
 
 
         

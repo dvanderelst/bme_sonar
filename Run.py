@@ -95,7 +95,7 @@ class Application(bme_sonar_gui.Ui_MainWindow):
             print('Connected...')
             self.data = self.client.get_data(rate=Settings.rate, duration=Settings.duration, raw=Settings.raw_data)
             self.set_status('Data received...')
-            print('Data received...')
+            print('Data received...', len(self.data))
 
         else:
             print('Generating dummy data ...')

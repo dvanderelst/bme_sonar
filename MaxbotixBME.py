@@ -28,7 +28,7 @@ class BMEclient:
 
     def get_data(self, rate, duration, raw=False):
         if verbose: print('Start get_data...')
-        command = str(rate) + ',' + str(100) + Settings.break_char
+        command = str(rate) + ',' + str(duration) + Settings.break_char
         if verbose: print('Command:', command)
         data = self.send_command(command)
         data = re.findall(r'[0-9]+', data)
