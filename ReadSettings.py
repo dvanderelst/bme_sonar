@@ -29,11 +29,11 @@ class SettingsReader:
         
         self.break_char = self.config['DEFAULT']['break_char']
 
-        self.raw_data = self.config['DEFAULT']['raw_data']
-        if self.raw_data == 'True':
-            self.raw_data = True
+        self.plot_raw_data = self.config['DEFAULT']['plot_raw_data']
+        if self.plot_raw_data == 'True':
+            self.plot_raw_data = True
         else:
-            self.raw_data = False
+            self.plot_raw_data = False
 
     def print_settings(self):
         print('SETTINGS')
@@ -47,7 +47,7 @@ class SettingsReader:
         print('baseline', self.baseline, type(self.baseline))
         print('signal_threshold', self.signal_threshold, type(self.signal_threshold))
         print('break_char', self.break_char, type(self.break_char))
-        print('raw_data', self.raw_data, type(self.raw_data))
+        print('plot_raw_data', self.plot_raw_data, type(self.plot_raw_data))
 
 
         
